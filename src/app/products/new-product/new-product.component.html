@@ -38,8 +38,7 @@
   <button class="btn btn-success"
           [disabled]="form.invalid">Create New Product</button>
   <hr>
-  <div class="alert alert-danger" *ngIf="errorModel">
-    <h1>{{errorModel.title}}</h1>
-    <p>{{errorModel.detail}}</p>
+  <div *ngFor="let error of errors">
+    <app-error [error]="error"></app-error>
   </div>
 </form>

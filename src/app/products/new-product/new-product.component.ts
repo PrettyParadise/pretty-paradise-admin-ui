@@ -14,7 +14,7 @@ import {HttpErrorResponse} from "@angular/common/http";
 export class NewProductComponent implements OnInit {
   productImage: File;
   productDetails: ProductModel = new ProductModel();
-  errorModel: ErrorModel = null;
+  errors: ErrorModel[] = [];
 
 
   constructor(private backendHttpRequestsService: ProductsBackendHttpRequestsService,
@@ -32,12 +32,15 @@ export class NewProductComponent implements OnInit {
         this.backendHttpRequestsService.getAllProducts().subscribe(
           (updatedProducts) => {
             this.backendHttpRequestsService.updatedProducts.next(updatedProducts);
+          },
+          (error: HttpErrorResponse) => {
+            this.errors.push(error.error);
           }
         );
         this.router.navigate(['..'], {relativeTo: this.route});
       },
       (error: HttpErrorResponse) => {
-        this.errorModel = error.error;
+        this.errors.push(error.error);
       }
     );
   }

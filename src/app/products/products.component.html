@@ -1,36 +1,35 @@
-
-  <div class="row">
-    <div class="col-6">
-      <div class="d-flex justify-content-center">
-        <div class="list-group">
-          <img src="assets/add_icon.svg"
-               alt="Add Product"
-               class="list-group-item"
-               style="cursor: pointer"
-               routerLink="new">
-          <div *ngFor="let product of products">
-            <a class="list-group-item list-group-item-action float-left"
-               [routerLink]="['/products', product.id]">
-              {{ product.name }}
-              <img [src]="'data:image/png;base64,' + product.encodedImage" alt="Product Image Missing" width="50" height="50" class="float-right">
-            </a>
-          </div>
-
-<!--          <a class="list-group-item list-group-item-action"-->
-<!--              *ngFor="let product of products"-->
-<!--              [routerLink]="['/products', product.id]">-->
-<!--            {{ product.name }}-->
-<!--            <img src="" width="50" height="50">-->
-<!--          </a>-->
-
-
+<div class="row" *ngIf="!error">
+  <div class="col-6">
+    <div class="d-flex justify-content-center">
+      <div class="list-group">
+        <img src="assets/add_icon.svg"
+             alt="Add Product"
+             class="list-group-item"
+             style="cursor: pointer"
+             routerLink="new">
+        <div *ngFor="let product of products">
+          <a class="list-group-item list-group-item-action float-left"
+             [routerLink]="['/products', product.id]">
+            {{ product.name }}
+            <img [src]="'data:image/png;base64,' + product.encodedImage" alt="Product Image Missing"
+                 width="50" height="50" class="float-right">
+          </a>
         </div>
       </div>
     </div>
-    <div class="col-6">
-      <div class="d-flex justify-content-center">
-        <router-outlet></router-outlet>
-      </div>
+  </div>
+  <div class="col-6">
+    <div class="d-flex justify-content-center">
+      <router-outlet></router-outlet>
     </div>
   </div>
+</div>
+
+<div class="row" *ngIf="error">
+  <div class="col-12">
+    <div class="d-flex justify-content-center">
+      <app-error [error]="error"></app-error>
+    </div>
+  </div>
+</div>
 

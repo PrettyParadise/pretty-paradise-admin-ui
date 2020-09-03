@@ -3,15 +3,20 @@ import {ProductModel} from '../../core/models/product.model';
 import {ActivatedRoute, Params, Router} from '@angular/router';
 import {FormGroup, NgForm} from '@angular/forms';
 import {ProductsBackendHttpRequestsService} from "../products-backend-http-requests.service";
+import {ErrorModel} from "../../core/models/error.model";
+import {HttpErrorResponse} from "@angular/common/http";
 
 @Component({
   selector: 'app-product-edit',
   templateUrl: './product-edit.component.html',
   styleUrls: ['./product-edit.component.scss']
 })
-export class ProductEditComponent implements OnInit {
+export class ProductEditComponent implements OnInit{
   product: ProductModel = new ProductModel();
-  @ViewChild('form', {static: true})editForm: NgForm;
+  errorGetProduct: ErrorModel = null;
+  errorGetProducts: ErrorModel = null;
+  errorDeleteProduct: ErrorModel = null;
+  @ViewChild('form') editForm: NgForm;
 
   constructor(private route: ActivatedRoute,
               private productsBackendHttpRequestsService: ProductsBackendHttpRequestsService,
@@ -27,6 +32,9 @@ export class ProductEditComponent implements OnInit {
             productName: product.name,
             productPrice: product.price
           })
+        },
+        (error: HttpErrorResponse) =>{
+          this.errorGetProduct = error.error;
         });
 
     });
@@ -42,16 +50,25 @@ export class ProductEditComponent implements OnInit {
     const confirmMessage = "Are you sure you want to delete this product "
     if (confirm(confirmMessage)){
       this.productsBackendHttpRequestsService.deleteProduct(this.product.id).subscribe(
-        () => {
+        (response) => {
+          console.log("Success")
+          console.log(response)
           this.productsBackendHttpRequestsService.getAllProducts().subscribe(
             (updatedProducts) => {
               this.productsBackendHttpRequestsService.updatedProducts.next(updatedProducts);
+            },
+            (error: HttpErrorResponse) => {
+              this.errorGetProducts = error.error;
             }
-          )
+
+          );
+          this.router.navigate(['../../'], {relativeTo: this.route});
+        },
+        (error: HttpErrorResponse) =>{
+          this.errorDeleteProduct = error.error;
+          console.error(this.errorDeleteProduct)
         }
       )
-      this.router.navigate(['../../'], {relativeTo: this.route});
-      console.log(this.route)
     }
   }
 }
