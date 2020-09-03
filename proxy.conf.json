@@ -1,0 +1,8 @@
+{
+  "/prettyparadise/products/*": {
+    "target": "http://localhost:8001",
+    "logLevel": "debug",
+    "changeOrigin": true,
+    "secure": false
+  }
+}
