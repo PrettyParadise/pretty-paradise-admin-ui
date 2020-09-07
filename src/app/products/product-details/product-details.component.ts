@@ -12,7 +12,7 @@ import {ErrorModel} from "../../core/models/error.model";
 })
 export class ProductDetailsComponent implements OnInit {
   product: ProductModel = new ProductModel();
-  errorModel: ErrorModel;
+  error: ErrorModel;
 
   constructor(private route: ActivatedRoute,
               private router: Router,
@@ -28,7 +28,7 @@ export class ProductDetailsComponent implements OnInit {
           console.log(this.product);
         },
         (error: HttpErrorResponse) => {
-          this.errorModel = error.error;
+          this.error = error.error;
         }
       );
 

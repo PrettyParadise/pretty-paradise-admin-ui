@@ -3,6 +3,8 @@ import {ProductModel} from '../core/models/product.model';
 import {ProductsBackendHttpRequestsService} from "./products-backend-http-requests.service";
 import {Router} from "@angular/router";
 import {Subscription} from "rxjs";
+import {ErrorModel} from "../core/models/error.model";
+import {HttpErrorResponse} from "@angular/common/http";
 
 @Component({
   selector: 'app-products',
@@ -12,6 +14,7 @@ import {Subscription} from "rxjs";
 })
 export class ProductsComponent implements OnInit, OnDestroy {
   products: ProductModel[] = [];
+  error: ErrorModel = null;
   newProductsSubscription: Subscription;
 
   constructor(private productsBackendHttpRequestsService: ProductsBackendHttpRequestsService) { }
@@ -20,6 +23,9 @@ export class ProductsComponent implements OnInit, OnDestroy {
     this.productsBackendHttpRequestsService.getAllProducts().subscribe(
       (products) => {
         this.products = products
+      },
+      (error: HttpErrorResponse) => {
+        this.error = error.error;
       }
     );
     this.newProductsSubscription = this.productsBackendHttpRequestsService.updatedProducts.subscribe(

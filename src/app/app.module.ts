@@ -12,6 +12,7 @@ import {ProductStartComponent} from './products/product-start/product-start.comp
 import {ProductEditComponent} from './products/product-edit/product-edit.component';
 import {FormsModule} from '@angular/forms';
 import {HttpClientModule} from "@angular/common/http";
+import { ErrorComponent } from './core/components/error/error.component';
 
 const appRoutes: Routes = [
   {path: '', component: HomeComponent},
@@ -35,6 +36,7 @@ const appRoutes: Routes = [
     ProductDetailsComponent,
     ProductStartComponent,
     ProductEditComponent,
+    ErrorComponent,
   ],
   imports: [
     BrowserModule,
