@@ -12,7 +12,8 @@ import {ErrorModel} from "../../core/models/error.model";
 })
 export class ProductDetailsComponent implements OnInit {
   product: ProductModel = new ProductModel();
-  error: ErrorModel;
+  errorModel: ErrorModel;
+  image: string = " ";
 
   constructor(private route: ActivatedRoute,
               private router: Router,
@@ -25,10 +26,10 @@ export class ProductDetailsComponent implements OnInit {
       this.productsBackendHttpRequestsService.getProduct(id).subscribe(
         (product) => {
           this.product = product;
-          console.log(this.product);
+          this.image = `data:image/png;base64,${product.encodedImage || ''}`;
         },
         (error: HttpErrorResponse) => {
-          this.error = error.error;
+          this.errorModel = error.error;
         }
       );
 
