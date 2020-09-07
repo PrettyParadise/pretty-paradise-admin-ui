@@ -16,6 +16,7 @@ export class ProductEditComponent implements OnInit{
   errorGetProduct: ErrorModel = null;
   errorGetProducts: ErrorModel = null;
   errorDeleteProduct: ErrorModel = null;
+  image: string = " "
   @ViewChild('form') editForm: NgForm;
 
   constructor(private route: ActivatedRoute,
@@ -28,6 +29,7 @@ export class ProductEditComponent implements OnInit{
       this.productsBackendHttpRequestsService.getProduct(params.id).subscribe(
         (product) =>{
           this.product = product;
+          this.image = `data:image/png;base64,${product.encodedImage || ''}`;
           this.editForm.setValue({
             productName: product.name,
             productPrice: product.price
@@ -51,8 +53,6 @@ export class ProductEditComponent implements OnInit{
     if (confirm(confirmMessage)){
       this.productsBackendHttpRequestsService.deleteProduct(this.product.id).subscribe(
         (response) => {
-          console.log("Success")
-          console.log(response)
           this.productsBackendHttpRequestsService.getAllProducts().subscribe(
             (updatedProducts) => {
               this.productsBackendHttpRequestsService.updatedProducts.next(updatedProducts);
@@ -66,7 +66,6 @@ export class ProductEditComponent implements OnInit{
         },
         (error: HttpErrorResponse) =>{
           this.errorDeleteProduct = error.error;
-          console.error(this.errorDeleteProduct)
         }
       )
     }

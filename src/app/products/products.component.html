@@ -1,4 +1,4 @@
-<div class="row" *ngIf="!error">
+<div class="row" *ngIf="!error; else errorRow">
   <div class="col-6">
     <div class="d-flex justify-content-center">
       <div class="list-group">
@@ -7,11 +7,11 @@
              class="list-group-item"
              style="cursor: pointer"
              routerLink="new">
-        <div *ngFor="let product of products">
+        <div *ngFor="let product of products; let i = index;">
           <a class="list-group-item list-group-item-action float-left"
-             [routerLink]="['/products', product.id]">
-            {{ product.name }}
-            <img [src]="'data:image/png;base64,' + product.encodedImage" alt="Product Image Missing"
+             [routerLink]="['/products', product?.id]">
+            {{ product?.name }}
+            <img [src]="productImages[i]" alt="product image of {{product?.name}}"
                  width="50" height="50" class="float-right">
           </a>
         </div>
@@ -24,12 +24,12 @@
     </div>
   </div>
 </div>
-
-<div class="row" *ngIf="error">
+<ng-template #errorRow>
   <div class="col-12">
     <div class="d-flex justify-content-center">
       <app-error [error]="error"></app-error>
     </div>
   </div>
-</div>
+</ng-template>
+
 

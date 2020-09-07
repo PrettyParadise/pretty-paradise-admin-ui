@@ -1,22 +1,21 @@
-<div *ngIf="!error">
-  <div class="row">
-    <div class="col-6">
-      <p>
-        <b>Product Name:</b>
-        <br>
-        <i>{{ product.name }}</i>
-      </p>
-      <p>
-        <b>Product Price: </b>
-        <br>
-        <i> R{{ product.price }}</i>
-      </p>
-    </div>
-    <div class="col-6">
-      <img [src]="'data:image/png;base64,' + product.encodedImage"
-           alt="Image of product"
-           class="img-thumbnail">
-    </div>
+<div class="row" *ngIf="!errorModel; else errorRow">
+  <div class="col-6">
+    <p>
+      <b>Product Name:</b>
+      <br>
+      <i>{{ product?.name }}</i>
+    </p>
+    <p>
+      <b>Product Price: </b>
+      <br>
+      <i> R{{ product?.price }}</i>
+    </p>
+  </div>
+  <div class="col-6">
+    <img [src]="image"
+         alt="product image of {{product?.name}}"
+         class="img-thumbnail">
+
   </div>
   <hr>
   <div class="row">
@@ -29,10 +28,12 @@
     </div>
   </div>
 </div>
-<div *ngIf="error">
-  <div class="row">
-    <div class="col-12">
-      <app-error [error]=error></app-error>
+
+<ng-template #errorRow>
+  <div class="col-12">
+    <div class="d-flex justify-content-center">
+      <app-error [error]="errorModel"></app-error>
     </div>
   </div>
-</div>
+</ng-template>
+

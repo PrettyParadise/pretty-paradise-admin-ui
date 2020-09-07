@@ -17,8 +17,8 @@
                name="productPrice"
                ngModel>
       </div>
-      <img [src]="'data:image/png;base64,' + product.encodedImage"
-           alt="Image of product"
+      <img [src]="image"
+           alt="product image of {{product?.name}}"
            class="img-thumbnail">
       <div class="form-group">
         <input type="file" class="form-control-file" id="exampleFormControlFile1"
@@ -54,7 +54,6 @@
     <app-error [error]="errorDeleteProduct"></app-error>
   </div>
 </div>
-
 <div class="row" *ngIf="errorGetProducts">
   <hr>
   <div class="col-12">

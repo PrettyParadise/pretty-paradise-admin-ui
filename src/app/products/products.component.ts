@@ -16,6 +16,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
   products: ProductModel[] = [];
   error: ErrorModel = null;
   newProductsSubscription: Subscription;
+  productImages: string[] = [];
 
   constructor(private productsBackendHttpRequestsService: ProductsBackendHttpRequestsService) { }
 
@@ -23,6 +24,10 @@ export class ProductsComponent implements OnInit, OnDestroy {
     this.productsBackendHttpRequestsService.getAllProducts().subscribe(
       (products) => {
         this.products = products
+        this.productImages = []
+        for (let product of products) {
+          this.productImages.push(`data:image/png;base64,${product.encodedImage || ''}`)
+        }
       },
       (error: HttpErrorResponse) => {
         this.error = error.error;
@@ -31,6 +36,10 @@ export class ProductsComponent implements OnInit, OnDestroy {
     this.newProductsSubscription = this.productsBackendHttpRequestsService.updatedProducts.subscribe(
       (updatedProducts) => {
         this.products = updatedProducts;
+        this.productImages = [];
+        for (let product of updatedProducts) {
+          this.productImages.push(`data:image/png;base64,${product.encodedImage || ''}`)
+        }
       }
     )
 
