@@ -3,4 +3,5 @@ export class ProductModel {
   public name: string;
   public price: number;
   public encodedImage: string;
+
 }
