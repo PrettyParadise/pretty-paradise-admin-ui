@@ -9,7 +9,6 @@ import {HomeComponent} from './home/home.component';
 import {NewProductComponent} from './products/new-product/new-product.component';
 import {ProductDetailsComponent} from './products/product-details/product-details.component';
 import {ProductStartComponent} from './products/product-start/product-start.component';
-import {ProductEditComponent} from './products/product-edit/product-edit.component';
 import {FormsModule} from '@angular/forms';
 import {HttpClientModule} from "@angular/common/http";
 import { ErrorComponent } from './core/components/error/error.component';
@@ -20,8 +19,7 @@ const appRoutes: Routes = [
     path: 'products', component: ProductsComponent, children: [
       {path: '', component: ProductStartComponent},
       {path: 'new', component: NewProductComponent},
-      {path: ':id', component: ProductDetailsComponent},
-      {path: ':id/edit', component: ProductEditComponent}
+      {path: ':id', component: ProductDetailsComponent}
     ]
   }
 ];
@@ -35,7 +33,6 @@ const appRoutes: Routes = [
     NewProductComponent,
     ProductDetailsComponent,
     ProductStartComponent,
-    ProductEditComponent,
     ErrorComponent,
   ],
   imports: [

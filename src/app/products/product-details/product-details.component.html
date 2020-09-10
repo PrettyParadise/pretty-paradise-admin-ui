@@ -1,34 +1,144 @@
-<div class="row" *ngIf="!errorModel; else errorRow">
-  <div class="col-6">
-    <p>
-      <b>Product Name:</b>
-      <br>
-      <i>{{ product?.name }}</i>
-    </p>
-    <p>
-      <b>Product Price: </b>
-      <br>
-      <i> R{{ product?.price }}</i>
-    </p>
-  </div>
-  <div class="col-6">
-    <img [src]="image"
-         alt="product image of {{product?.name}}"
-         class="img-thumbnail">
-
-  </div>
-  <hr>
+<!-- Product details -->
+<div *ngIf="!errorModel; else errorRow">
   <div class="row">
-    <div class="col-12">
-      <div class="d-flex justify-content-center">
-        <button class="btn btn-primary" (click)="onEdit()">
-          Edit Product
-        </button>
+    <div class="col-6">
+      <p>
+        <b>Product Name:</b>
+        <br>
+        <i>{{ product?.name }}</i>
+      </p>
+      <p>
+        <b>Product Price: </b>
+        <br>
+        <i> R{{ product?.price }}</i>
+      </p>
+    </div>
+    <div class="col-6">
+      <img [src]="image"
+           alt="product image of {{product?.name}}"
+           class="img-thumbnail">
+
+    </div>
+    <hr>
+  </div>
+</div>
+
+
+<!-- Product editing -->
+<div class="row">
+  <div class="col-12">
+    <div class=" d-flex justify-content-center">
+      <!-- Button trigger modal -->
+      <button type="button" class="btn btn-primary" data-toggle="modal"
+              data-target="#productDetailsEditModal">
+        Edit Product Details
+      </button>
+
+      <!-- Modal -->
+      <div class="modal fade" id="productDetailsEditModal" tabindex="-1" role="dialog"
+           aria-labelledby="productDetailsEditModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="productDetailsEditModalLabel">Modal title</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="row">
+                <div class="col-12">
+                  <form (ngSubmit)="onSaveChangesEditedProductDetails(editedProductDetailsForm)"
+                        #editedProductDetailsForm="ngForm">
+                    <div class="form-group ">
+                      <label for="productName">Product Name</label>
+                      <input type="text"
+                             class="form-control"
+                             id="productName"
+                             name="productName"
+                             ngModel
+                             required>
+                    </div>
+                    <div class="form-group">
+                      <label for="productPrice">Product Price</label>
+                      <input type="number"
+                             class="form-control"
+                             id="productPrice"
+                             name="productPrice"
+                             ngModel
+                             required
+                             pattern="[1-9]+[0-9]*" >
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal" #productDetailsEditModalCloseButton>Close
+                      </button>
+                      <button type="submit" class="btn btn-primary" [disabled]="!editedProductDetailsForm.valid">Save changes</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </div>
+<div class="row">
+  <div class="col-12">
+    <div class=" d-flex justify-content-center">
+      <!-- Button trigger modal -->
+      <button type="button" class="btn btn-primary" data-toggle="modal"
+              data-target="#productImageEditModal">
+        Edit Product Image
+      </button>
 
+      <!-- Modal -->
+      <div class="modal fade" id="productImageEditModal" tabindex="-1" role="dialog"
+           aria-labelledby="productImageEditModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="productImageEditModalLabel">Modal title</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <img [src]="image"
+                   alt="product image of {{product?.name}}"
+                   class="img-thumbnail">
+
+              <input type="file"
+                     class="form-control-file"
+                     (change)="onFileSelect($event)">
+              <div class="modal-footer">
+                <button type="button"
+                        class="btn btn-secondary"
+                        data-dismiss="modal"
+                        #productImageEditModalCloseButton>Close
+                </button>
+                <button type="button" class="btn btn-primary"
+                        (click)="onSaveChangesNewImage()">Save changes</button>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-12">
+    <div class=" d-flex justify-content-center">
+      <button type="button" class="btn btn-danger" (click)="onDeleteProduct()">Delete Product
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Errors encountered from the backend -->
 <ng-template #errorRow>
   <div class="col-12">
     <div class="d-flex justify-content-center">
