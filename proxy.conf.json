@@ -1,6 +1,6 @@
 {
   "/prettyparadise/products/*": {
-    "target": "http://localhost:8001",
+    "target": "http://localhost:8086/pretty-paradise-admin",
     "logLevel": "debug",
     "changeOrigin": true,
     "secure": false
